@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Noche de Halloween · Invitación</title>
+<style>
+@font-face{font-family:Spooky;src:url(Halloween_Spooky.otf)}
+:root{--naranja:#ff7a1a;--cian:#3df0ff;--morado:#c04dff}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:#000;color:#eef;font:17px/1.5 system-ui,-apple-system,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden;height:100svh}
+.off{display:none!important}
+img{max-width:100%}
+
+/* Neón: se enciende, parpadea y sube de intensidad */
+.neon{font-family:Spooky,Impact,sans-serif;font-weight:400;color:#fff;letter-spacing:.04em;line-height:1.1;
+ text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 28px var(--c);animation:enc 3.4s infinite}
+@keyframes enc{
+ 0%{opacity:.25}6%{opacity:1}9%{opacity:.35}13%{opacity:1}17%{opacity:.5}22%{opacity:1}
+ 55%{text-shadow:0 0 6px #fff,0 0 20px var(--c),0 0 46px var(--c),0 0 90px var(--c)}
+ 100%{opacity:1;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 28px var(--c)}}
+h1.neon{font-size:clamp(2.8rem,15vw,5rem)}
+h2.neon{font-size:clamp(2rem,10vw,3.2rem);margin-bottom:18px;text-align:center}
+.o{--c:var(--naranja)}.c{--c:var(--cian)}.m{--c:var(--morado)}
+
+/* Pantalla de entrada */
+#entrada{position:fixed;inset:0;z-index:50;background:#000 url(fondo-1.jpg) center/cover;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;text-align:center;padding:18vh 12vw;gap:14px}
+#entrada .aviso{font-size:.85rem;opacity:.85}
+#entrada .para{font-size:clamp(1.8rem,9vw,2.8rem)}
+.btn{font-family:Spooky,Impact,sans-serif;font-size:1.6rem;letter-spacing:.05em;color:#fff;background:rgba(0,0,0,.55);
+ border:2px solid var(--c);border-radius:14px;padding:12px 26px;cursor:pointer;text-decoration:none;display:inline-block;
+ box-shadow:0 0 14px var(--c),inset 0 0 14px var(--c);text-shadow:0 0 10px var(--c);animation:lat 2.2s ease-in-out infinite}
+@keyframes lat{50%{box-shadow:0 0 30px var(--c),inset 0 0 22px var(--c)}}
+.chk{font-size:.9rem;display:flex;gap:8px;align-items:center;cursor:pointer}
+
+/* Video 9:16 */
+#vwrap{position:fixed;inset:0;z-index:60;background:#000}
+#vid{width:100%;height:100%;object-fit:cover}
+#saltar{position:absolute;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));font:inherit;font-size:.9rem;
+ color:#fff;background:rgba(0,0,0,.5);border:1px solid #fff6;border-radius:20px;padding:6px 14px}
+
+/* Secciones */
+.sec{position:relative;min-height:100svh;padding:90px 22px;display:flex;flex-direction:column;align-items:center;
+ justify-content:center;background-position:center;background-size:cover;overflow:hidden}
+.panel{position:relative;z-index:2;width:100%;max-width:420px;background:rgba(4,4,24,.68);backdrop-filter:blur(4px);
+ border:1px solid #ffffff22;border-radius:18px;padding:22px 20px;text-align:center}
+.panel p+p{margin-top:8px}
+#s1{background-image:url(fondo-2.jpg)}#s2{background-image:url(fondo-3.jpg)}#s3{background-image:url(fondo-4.jpg)}
+#s4{background-image:url(fondo-5.jpg)}#s5{background-image:url(fondo-1.jpg)}
+.sub{font-size:1.15rem;margin:10px 0}
+.pases{color:var(--naranja);font-weight:600}
+#cd{display:flex;gap:8px;justify-content:center;margin:16px 0}
+#cd div{min-width:64px;padding:8px 4px;border:1px solid var(--cian);border-radius:10px;box-shadow:0 0 10px #3df0ff66}
+#cd b{display:block;font:400 1.9rem Spooky,Impact,sans-serif;color:var(--cian);text-shadow:0 0 10px var(--cian)}
+#cd span{font-size:.7rem;opacity:.8}
+.mini{font-size:1.2rem;padding:8px 18px;margin-top:10px}
+ul.it{list-style:none;padding:0;text-align:left}
+ul.it li{display:flex;gap:12px;padding:8px 0;border-bottom:1px dashed #ffffff22}
+ul.it li:last-child{border:0}
+ul.it b{flex:0 0 78px;color:var(--naranja)}
+iframe{width:100%;height:240px;border:0;border-radius:12px;margin:12px 0;filter:invert(.9) hue-rotate(180deg) contrast(.9)}
+
+/* Payasos y monstruos PNG */
+.png{position:absolute;z-index:1;pointer-events:none;animation:flot 6s ease-in-out infinite;filter:drop-shadow(0 0 14px #000)}
+@keyframes flot{50%{transform:translateY(-14px) scale(1.03)}}
+#p1{width:46vw;max-width:230px;top:0;left:0}
+#p2{width:26vw;max-width:130px;right:2px;bottom:16px;animation-duration:7s}
+#p3{width:48vw;max-width:240px;left:-6px;bottom:0}
+#p4{width:44vw;max-width:220px;right:-6px;bottom:0}
+
+/* Decoración fija: luz de alarma, telarañas, arañas */
+#alarma{position:fixed;inset:0;z-index:20;pointer-events:none;background:radial-gradient(circle,transparent 35%,rgba(255,0,30,.55));
+ opacity:0;animation:pulso 4.5s ease-in-out infinite}
+@keyframes pulso{0%,100%{opacity:0}45%{opacity:.8}55%{opacity:.8}}
+.web{position:fixed;top:0;width:44vw;max-width:220px;z-index:21;pointer-events:none;opacity:.55}
+#wl{left:0}#wr{right:0;transform:scaleX(-1)}
+.sp{position:fixed;top:0;z-index:22;pointer-events:none;display:flex;flex-direction:column;align-items:center;
+ animation:baja 9s ease-in-out infinite}
+.sp i{width:1px;height:60vh;margin-top:-60vh;background:#ffffff99}
+.sp span{font-size:26px;margin-top:-6px}
+@keyframes baja{0%,100%{transform:translateY(0)}50%{transform:translateY(calc(var(--d) * 1vh))}}
+
+/* Screamer */
+#scr{position:fixed;inset:0;z-index:100;background:#000;opacity:0;pointer-events:none}
+#scr.on{pointer-events:auto}
+#scr img{width:100%;height:100%;object-fit:cover}
+
+/* Controles */
+#ctl{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;gap:8px}
+#ctl button{width:44px;height:44px;border-radius:50%;border:1px solid var(--cian);background:rgba(0,0,0,.65);font-size:20px;
+ color:#fff;box-shadow:0 0 10px #3df0ff88}
+#ctl button.x{opacity:.45}
+
+/* Formulario */
+#frm{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:20px}
+#frm form{width:100%;max-width:400px;background:#0b0620;border:2px solid var(--morado);border-radius:18px;padding:22px;
+ box-shadow:0 0 30px #c04dff88;display:flex;flex-direction:column;gap:12px}
+#frm label{display:flex;gap:10px;align-items:center;font-size:1.05rem}
+#frm input[type=text],#frm select{width:100%;padding:10px;border-radius:10px;border:1px solid #fff4;background:#150c33;color:#fff;font:inherit}
+#frm .fila{display:flex;gap:10px}
+.cerrar{background:none;border:0;color:#fff9;font:inherit;text-decoration:underline;cursor:pointer}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.neon{opacity:1}}
+</style>
+</head>
+<body class="lock">
+
+<!-- 1. ENTRADA -->
+<div id="entrada">
+  <p class="aviso">Contiene sustos y sonidos fuertes</p>
+  <p>Invitación para</p>
+  <h1 class="neon o para" id="nom"></h1>
+  <p class="sub">Pase válido para <span class="pases" id="pas"></span></p>
+  <button class="btn o" id="ir">Toca si te atreves</button>
+  <label class="chk"><input type="checkbox" id="nosust"> Desactivar sustos</label>
+</div>
+
+<!-- 2. VIDEO -->
+<div id="vwrap" class="off">
+  <video id="vid" src="video.mp4" playsinline preload="auto"></video>
+  <button id="saltar">Saltar</button>
+</div>
+
+<!-- 3. INVITACIÓN -->
+<main id="inv" class="off">
+  <section class="sec" id="s1">
+    <img class="png" id="p1" src="76328.png" alt="">
+    <div class="panel">
+      <h1 class="neon o">Noche de Halloween</h1>
+      <p class="sub">Fiesta de disfraces</p>
+      <p><b id="n2"></b></p>
+      <p>Pase válido para <span class="pases" id="p2t"></span></p>
+      <p class="sub">Sábado 31 de octubre · 10:00 pm<br>Mérida, Yucatán</p>
+      <div id="cd"></div>
+      <a class="btn c mini" id="cal" target="_blank" rel="noopener">Agregar al calendario</a>
+    </div>
+  </section>
+
+  <section class="sec" id="s2">
+    <img class="png" id="p2" src="76329.png" alt="">
+    <div class="panel">
+      <h2 class="neon m">Itinerario</h2>
+      <ul class="it">
+        <li><b>10:00 pm</b>Recepción de invitados y fotos en la entrada embrujada</li>
+        <li><b>10:30 pm</b>Bienvenida y presentación de disfraces</li>
+        <li><b>11:00 pm</b>Cena y bebidas</li>
+        <li><b>11:30 pm</b>Baile y música de terror</li>
+        <li><b>12:30 am</b>Concurso de disfraces</li>
+        <li><b>1:00 am</b>Entrega de premios</li>
+        <li><b>1:15 am</b>Dinámica sorpresa</li>
+        <li><b>2:00 am</b>Último baile y cierre</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <img class="png" id="p3" src="76327.png" alt="">
+    <div class="panel">
+      <h2 class="neon o">Fiesta de disfraces</h2>
+      <p>El disfraz es obligatorio. Mientras más aterrador, mejor.</p>
+      <p class="sub neon c" style="font-size:1.8rem">Premios a los mejores</p>
+      <p>Disfraz más terrorífico<br>Disfraz más original<br>Disfraz más creativo</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s4">
+    <img class="png" id="p4" src="76326.png" alt="">
+    <div class="panel">
+      <h2 class="neon c">Lugar</h2>
+      <p><b>Salón de fiestas Jafet</b></p>
+      <p>Calle Juan Pablo II, Mérida, Yucatán</p>
+      <iframe id="map" loading="lazy" title="Mapa del salón"></iframe>
+      <a class="btn o mini" id="como" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="panel">
+      <h2 class="neon m">¿Vienes?</h2>
+      <p>Tu lugar está reservado para <span class="pases" id="p5t"></span>. Avísanos si vas a venir.</p>
+      <button class="btn m mini" id="conf">Confirmar asistencia</button>
+    </div>
+  </section>
+</main>
+
+<!-- Formulario -->
+<div id="frm" class="off">
+  <form id="f">
+    <h2 class="neon m" style="font-size:2rem;text-align:center">Confirmar asistencia</h2>
+    <input type="text" id="fn" placeholder="Tu nombre" required>
+    <label><input type="radio" name="r" value="si" checked> Asistiré</label>
+    <label><input type="radio" name="r" value="no"> No asistiré</label>
+    <div id="cant"><label for="np">¿Cuántas personas irán?</label><select id="np"></select></div>
+    <div class="fila"><button class="btn c mini" style="flex:1;margin:0">Enviar por WhatsApp</button></div>
+    <button type="button" class="cerrar" id="cerrar">Cancelar</button>
+  </form>
+</div>
+
+<!-- Decoración -->
+<div id="alarma" class="off"></div>
+<svg class="web off" id="wl" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width=".6"><path d="M0 0L100 0M0 0L90 40M0 0L65 65M0 0L40 90M0 0L0 100M20 0Q16 16 0 20M45 0Q35 35 0 45M72 0Q55 55 0 72M100 0Q70 70 0 100"/></svg>
+<svg class="web off" id="wr" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width=".6"><path d="M0 0L100 0M0 0L90 40M0 0L65 65M0 0L40 90M0 0L0 100M20 0Q16 16 0 20M45 0Q35 35 0 45M72 0Q55 55 0 72M100 0Q70 70 0 100"/></svg>
+<div class="sp off" style="left:22%;--d:22;animation-delay:-2s"><i></i><span>🕷️</span></div>
+<div class="sp off" style="left:58%;--d:14;animation-delay:-5s"><i></i><span>🕷️</span></div>
+<div class="sp off" style="left:84%;--d:30;animation-delay:-7s"><i></i><span>🕷️</span></div>
+
+<div id="scr"><img alt=""></div>
+
+<div id="ctl" class="off">
+  <button id="bm" title="Música">♪</button>
+  <button id="bs" title="Sustos">👻</button>
+</div>
+
+<audio id="mus" src="musica.mp3" loop preload="auto"></audio>
+<audio id="a1" src="screamer-1.mp3" preload="auto"></audio>
+<audio id="a2" src="screamer_2.mp3" preload="auto"></audio>
+
+<script>
+/* ===== CONFIGURACIÓN: cambia aquí textos, fechas y archivos ===== */
+const C={
+  whatsapp:'529993379848',
+  fechaInicio:'2026-10-31T22:00:00-06:00',
+  calendario:'20261101T040000Z/20261101T080000Z',
+  lugar:'Salón de fiestas Jafet, Juan Pablo II, Mérida, Yucatán',
+  mapaLink:'https://maps.app.goo.gl/gS98ocDtX1F7CuE78?g_st=ac',
+  mapaEmbed:'https://maps.google.com/maps?q=Sal%C3%B3n+de+fiestas+Jafet+Juan+Pablo+II+M%C3%A9rida+Yucat%C3%A1n&output=embed',
+  invitadoDefault:'Invitado especial', pasesDefault:1,
+  screamer1:'76286.jpg', screamer2:'76287.jpg',
+  sustoMin:25, sustoMax:60            // segundos para el susto aleatorio
+};
+/* Enlace personalizado: ?invitado=Familia Pérez&pases=4 */
+const q=new URLSearchParams(location.search);
+const invitado=(q.get('invitado')||C.invitadoDefault).slice(0,60);
+const pases=Math.min(20,Math.max(1,parseInt(q.get('pases'))||C.pasesDefault));
+const txtPases=pases+(pases===1?' persona':' personas');
+const $=id=>document.getElementById(id);
+
+['nom','n2'].forEach(i=>$(i).textContent=invitado);
+['pas','p2t','p5t'].forEach(i=>$(i).textContent=txtPases);
+$('fn').value=invitado;
+for(let i=1;i<=pases;i++)$('np').add(new Option(i+(i===1?' persona':' personas'),i));
+$('np').value=pases;
+$('map').src=C.mapaEmbed; $('como').href=C.mapaLink;
+$('cal').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Noche de Halloween')+
+  '&dates='+C.calendario+'&location='+encodeURIComponent(C.lugar)+'&details='+encodeURIComponent('Fiesta de disfraces');
+
+let sustos=true, iniciado=false, enConfirmar=false, formAbierto=false;
+
+/* Cuenta regresiva */
+const fin=new Date(C.fechaInicio).getTime();
+function tick(){
+  let d=fin-Date.now();
+  if(d<=0){$('cd').innerHTML='<b class="neon o" style="font-size:2rem">¡Es hoy!</b>';return}
+  const v=[[86400e3,'días'],[3600e3,'horas'],[60e3,'min'],[1e3,'seg']];
+  $('cd').innerHTML=v.map(([m,l])=>{const n=Math.floor(d/m);d%=m;return `<div><b>${String(n).padStart(2,'0')}</b><span>${l}</span></div>`}).join('');
+}
+tick(); setInterval(tick,1000);
+
+/* Screamers: aparece a pantalla completa y se desvanece con el sonido */
+function susto(img,aud,despues){
+  if(!sustos){despues&&despues();return}
+  const s=$('scr'); s.querySelector('img').src=img;
+  s.style.transition='none'; s.style.opacity=1; s.classList.add('on');
+  aud.currentTime=0; aud.volume=.85; aud.play().catch(()=>{});
+  const d=(isFinite(aud.duration)&&aud.duration>0)?aud.duration:3;
+  setTimeout(()=>{s.style.transition=`opacity ${Math.max(d-.8,1.2)}s ease-out`;s.style.opacity=0},800);
+  setTimeout(()=>{s.classList.remove('on');despues&&despues()},Math.max(d,2)*1000+250);
+}
+function programar(){
+  const t=(C.sustoMin+Math.random()*(C.sustoMax-C.sustoMin))*1000;
+  setTimeout(()=>{
+    if(enConfirmar||formAbierto||!sustos){return enConfirmar||formAbierto?programar():null}
+    susto(C.screamer1,$('a1'));
+  },t);
+}
+new IntersectionObserver(e=>enConfirmar=e[0].isIntersecting,{threshold:.3}).observe($('s5'));
+
+/* Entrar: desbloquea audio, reproduce el video */
+$('ir').onclick=()=>{
+  sustos=!$('nosust').checked; $('bs').classList.toggle('x',!sustos);
+  [$('mus'),$('a1'),$('a2')].forEach(a=>{a.muted=true;a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{a.muted=false})});
+  $('entrada').classList.add('off'); $('vwrap').classList.remove('off');
+  $('vid').play().catch(mostrarInvitacion);
+};
+$('vid').onended=$('vid').onerror=$('saltar').onclick=mostrarInvitacion;
+
+function mostrarInvitacion(){
+  if(iniciado)return; iniciado=true;
+  $('vid').pause(); $('vwrap').classList.add('off');
+  document.body.classList.remove('lock');
+  ['inv','alarma','ctl','wl','wr'].forEach(i=>$(i).classList.remove('off'));
+  document.querySelectorAll('.sp').forEach(e=>e.classList.remove('off'));
+  $('mus').volume=.7; $('mus').play().catch(()=>{});
+  programar();
+}
+
+/* Controles */
+$('bm').onclick=()=>{const m=$('mus');m.paused?m.play():m.pause();$('bm').classList.toggle('x',m.paused)};
+$('bs').onclick=()=>{sustos=!sustos;$('bs').classList.toggle('x',!sustos)};
+
+/* Confirmar: primero el susto, después el formulario */
+$('conf').onclick=()=>susto(C.screamer2,$('a2'),()=>{formAbierto=true;$('frm').classList.remove('off')});
+$('cerrar').onclick=()=>{formAbierto=false;$('frm').classList.add('off')};
+document.querySelectorAll('input[name=r]').forEach(r=>r.onchange=()=>$('cant').classList.toggle('off',r.value==='no'&&r.checked));
+$('f').onsubmit=e=>{
+  e.preventDefault();
+  const nombre=$('fn').value.trim()||invitado, va=document.querySelector('input[name=r]:checked').value==='si', n=Math.min(pases,+$('np').value||1);
+  const msg=va
+    ?`Hola, soy ${nombre}. ¡Sí asistiré a la fiesta de Halloween del 31 de octubre! Iremos ${n} ${n===1?'persona':'personas'} (pase para ${pases}).`
+    :`Hola, soy ${nombre}. Lamentablemente no podré asistir a la fiesta de Halloween del 31 de octubre.`;
+  window.open('https://wa.me/'+C.whatsapp+'?text='+encodeURIComponent(msg),'_blank');
+};
+</script>
+</body>
+</html>
